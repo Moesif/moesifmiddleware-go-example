@@ -11,7 +11,7 @@ import(
 	"strings"
 )
 
-var moesifOption map[interface{}]string
+var moesifOption map[string]interface{}
 
 func init() {
 	moesifOption = options.MoesifOptions()
