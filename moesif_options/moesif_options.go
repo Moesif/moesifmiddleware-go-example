@@ -1,7 +1,7 @@
 package moesif_options
 
-func MoesifOptions() map[interface{}]string {
-	var moesifOptions = map[interface{}]string {
+func MoesifOptions() map[string]interface{} {
+	var moesifOptions = map[string]interface{} {
 		"Application_Id": "Moesif Application Id",
 	}
 	return moesifOptions
