@@ -46,6 +46,45 @@ func getMetadata(request *http.Request, response moesifmiddleware.MoesifResponse
 	return metadata
 }
 
+// Skip Outgoing Event
+func shouldSkipOutgoing(request *http.Request, response *http.Response) bool{
+	return strings.Contains(request.URL.String(), "test")
+}
+
+// Set Outgoing Event User Id
+func identifyUserOutgoing(request *http.Request, response *http.Response) string{
+	return "golangapiuser"
+}
+
+// Set Outgoing Event Session Token
+func getSessionTokenOutgoing(request *http.Request, response *http.Response) string{
+	return "token is blah blah blah"
+}
+
+// Mask Outgoing Event Model
+func maskEventModelOutgoing(eventModel models.EventModel) models.EventModel {
+	return eventModel
+}
+
+// Set Outoing Event Metadata
+func getMetadataOutgoing(request *http.Request, response *http.Response) map[string]interface{} {
+	
+	var innerNestedFields = map[string] interface{} {
+		"nestedInner": "test",
+	}
+
+	var nestedFields = map[string] interface{} {
+		"inner":  innerNestedFields,
+	}
+	
+	var metadata = map[string]interface{} {
+		"foo" : "bar",
+		"user": "golangapiuser",
+		"test": nestedFields,
+	}
+	return metadata
+}
+
 func MoesifOptions() map[string]interface{} {
 	var moesifOptions = map[string]interface{} {
 		"Application_Id": "Moesif Application Id",
@@ -56,6 +95,12 @@ func MoesifOptions() map[string]interface{} {
 		"Get_Session_Token": getSessionToken,
 		"Mask_Event_Model": maskEventModel,
 		"Debug": true,
+		"Capture_Outoing_Requests": true,
+		"Should_Skip_Outgoing": shouldSkipOutgoing,
+		"Identify_User_Outgoing": identifyUserOutgoing,
+		"Get_Metadata_Outgoing": getMetadataOutgoing,
+		"Get_Session_Token_Outgoing": getSessionTokenOutgoing,
+		"Mask_Event_Model_Outgoing": maskEventModelOutgoing,
 	}
 	return moesifOptions
 }
