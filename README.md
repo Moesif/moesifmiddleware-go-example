@@ -24,6 +24,15 @@ http.Handle(pattern string, moesifmiddleware.MoesifMiddleware(http.HandlerFunc(h
 
 2. Be sure to edit the moesif_options/moesif_options.go to change the application id to your application id obtained from Moesif.
 
+```go
+func MoesifOptions() map[string]interface{} {
+	var moesifOptions = map[string]interface{} {
+		"Application_Id": "Moesif Application Id",
+	}
+	return moesifOptions
+}
+```
+
 3. Start the server - `go run main.go`
 
 4. See main.go for some urls that you can hit the server with (e.g. http://localhost:3000/api/employee/42), and the data should be captured in the corresponding Moesif account of the application id.
@@ -33,6 +42,16 @@ http.Handle(pattern string, moesifmiddleware.MoesifMiddleware(http.HandlerFunc(h
 1. Install Moesif Middleware if you have not done so. `go get github.com/moesif/moesifmiddleware-go`
 
 2. Be sure to edit the moesif_options/moesif_options.go to change the application id to your `application_id` obtained from Moesif and set `capture_outgoing_request` to true to capture outgoing request.
+
+```go
+func MoesifOptions() map[string]interface{} {
+	var moesifOptions = map[string]interface{} {
+        "Application_Id": "Moesif Application Id",
+        "Capture_Outoing_Requests": true,
+	}
+	return moesifOptions
+}
+```
 
 3. Switch to `moesif_capture_outgoing` directory and run the test `go test -v` - and the data (incoming and outgoing api call) should be captured in the corresponding Moesif account of the application id.
 
