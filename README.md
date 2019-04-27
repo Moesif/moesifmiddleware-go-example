@@ -4,6 +4,20 @@ Send REST API Events to Moesif for error analysis
 
 [Source Code on GitHub](https://github.com/moesif/moesifmiddleware-go-example)
 
+## How to add middleware to your application
+
+Add middleware to your application.
+
+```go
+http.Handle(pattern string, moesifmiddleware.MoesifMiddleware(http.HandlerFunc(handle), moesifOption))
+```
+
+#### handler func(ResponseWriter, *Request)
+(__required__), HandlerFunc registers the handler function for the given pattern.
+
+#### moesifOption
+(__required__), _map[string]interface{}_, are the configuration options for your application. Please find more details on how to [configure options](https://github.com/Moesif/moesifmiddleware-go#configuration-options).
+
 ## How to run this example
 
 1. Install Moesif Middleware if you have not done so. `go get github.com/moesif/moesifmiddleware-go`
