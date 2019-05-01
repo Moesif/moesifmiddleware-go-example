@@ -53,7 +53,7 @@ func MoesifOptions() map[string]interface{} {
 }
 ```
 
-3. Switch to `moesif_capture_outgoing` directory and run the test `go test -v` - and the data (incoming and outgoing api call) should be captured in the corresponding Moesif account of the application id.
+3. Switch to `moesif_capture_outgoing` directory and run the test `go test -run TestCaptureOutgoing` - and the data (incoming and outgoing api call) should be captured in the corresponding Moesif account of the application id.
 
 ## Other integrations
 
