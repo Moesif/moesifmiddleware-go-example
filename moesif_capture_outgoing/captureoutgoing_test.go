@@ -3,13 +3,11 @@ package capture_outgoing_test
 import (
 	"log"
 	"net/http"
-	"encoding/json"
 	"time"
-	"io"
 	moesifmiddleware "github.com/moesif/moesifmiddleware-go"
+	"github.com/moesif/moesifapi-go/models"
 	options "github.com/moesif/moesifmiddleware-go-example/moesif_options"
 	"testing"
-	"net/http/httptest"
 )
 
 var moesifOption map[string]interface{}
@@ -19,53 +17,178 @@ func init() {
 	moesifOption = options.MoesifOptions()
 }
 
-// Pretty print function
-func prettyPrint(i interface{}) string {
-    s, _ := json.MarshalIndent(i, "", "\t")
-    return string(s)
-}
-
 func TestCaptureOutgoing(t *testing.T) {
 
-	// Create a request to pass to our handler. We don't have any query parameters for now, so we'll
-    // pass 'nil' as the third parameter.
-	req := httptest.NewRequest("GET", "https://jsonplaceholder.typicode.com/posts/1", nil)
+	// Start Capturing Outgoing Request
+	moesifmiddleware.StartCaptureOutgoing(moesifOption)
 
-	// Response recorder to record the response
-	rr := httptest.NewRecorder()
+	// Outgoing API call to third parties like Github / Stripe or to your own dependencies
+	_, err := http.Get("https://api.github.com")
 
-	// Moesif Middleware function - func MoesifMiddleware(next http.Handler, configurationOption map[string]interface{})
-	handler := moesifmiddleware.MoesifMiddleware(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Write the response
-		io.WriteString(w, `{
-			"userId": 1,
-			"id": 1,
-			"title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-			"body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-		  }`)
-		// Set the content-type as application/json
-		w.Header().Set("Content-Type", "application/json")
-
-		// Outgoing API call to third parties like Github / Stripe or to your own dependencies
-		_, err := http.Get("https://api.github.com")
-
-		// Check for any errors while sending outgoing request
-		if err != nil {
-			log.Printf("Error while sending request : %s.\n", err.Error())
-		}
-
-	}), moesifOption)
-
-	// Our handlers satisfy http.Handler, so we can call their ServeHTTP method 
-    // directly and pass in our Request and ResponseRecorder.
-	handler.ServeHTTP(rr, req)
+	// Check for any errors while sending outgoing request
+	if err != nil {
+		log.Printf("Error while sending request : %s.\n", err.Error())
+	}
 
 	// Sleep to allow queue to flush for testing purpose
 	time.Sleep(20*time.Second)
 
-	// Check the status code is what we expect.
-    if status := rr.Code; status != http.StatusOK {
-        t.Errorf("handler returned wrong status code: got %v want %v",
-            status, http.StatusOK)
-    }
+}
+
+func TestUpdateUser(t *testing.T) {
+	
+	// Modified Time
+	modifiedTime := time.Now().UTC()
+
+	// User Metadata
+	metadata := map[string]interface{}{
+		"email": "johndoe1@acmeinc.com",
+		"Key1": "metadata",
+		"Key2": 42,
+		"Key3": map[string]interface{}{
+			"Key3_1": "SomeValue",
+		},
+	}
+
+	// Prepare user model
+	user := models.UserModel{
+		ModifiedTime: 	  &modifiedTime,
+		SessionToken:     nil,
+		IpAddress:		  nil,
+		UserId:			  "golangapiuser",	
+		UserAgentString:  nil,
+		Metadata:		  &metadata,
+	}
+
+	// Update User
+	moesifmiddleware.UpdateUser(&user, moesifOption)
+
+	// Sleep to allow queue to flush for testing purpose
+	time.Sleep(20*time.Second)
+}
+
+func TestUpdateUsersBatch(t *testing.T) {
+
+	// Batch Users
+	var users []*models.UserModel
+
+	// Modified Time
+	modifiedTime := time.Now().UTC()
+
+	// User Metadata
+	metadata := map[string]interface{}{
+		"email": "johndoe1@acmeinc.com",
+		"Key1": "metadata",
+		"Key2": 42,
+		"Key3": map[string]interface{}{
+			"Key3_1": "SomeValue",
+		},
+	}
+
+	// Prepare user model
+	userA := models.UserModel{
+		ModifiedTime: 	  &modifiedTime,
+		SessionToken:     nil,
+		IpAddress:		  nil,
+		UserId:			  "golangapiuser",	
+		UserAgentString:  nil,
+		Metadata:		  &metadata,
+	}
+
+	userB := models.UserModel{
+		ModifiedTime: 	  &modifiedTime,
+		SessionToken:     nil,
+		IpAddress:		  nil,
+		UserId:			  "golangapiuser1",	
+		UserAgentString:  nil,
+		Metadata:		  &metadata,
+	}
+
+	users = append(users, &userA)
+	users = append(users, &userB)
+
+	// Update User
+	moesifmiddleware.UpdateUsersBatch(users, moesifOption)
+
+	// Sleep to allow queue to flush for testing purpose
+	time.Sleep(20*time.Second)
+}
+
+func TestUpdateCompany(t *testing.T) {
+	
+	// Modified Time
+	modifiedTime := time.Now().UTC()
+
+	// User Metadata
+	metadata := map[string]interface{}{
+		"email": "johndoe1@acmeinc.com",
+		"Key1": "metadata",
+		"Key2": 42,
+		"Key3": map[string]interface{}{
+			"Key3_1": "SomeValue",
+		},
+	}
+
+	// Prepare company model
+	company := models.CompanyModel{
+		ModifiedTime: 	  &modifiedTime,
+		SessionToken:     nil,
+		IpAddress:		  nil,
+		CompanyId:		  "1",	
+		CompanyDomain:    nil,
+		Metadata:		  &metadata,
+	}
+
+	// Update company
+	moesifmiddleware.UpdateCompany(&company, moesifOption)
+
+	// Sleep to allow queue to flush for testing purpose
+	time.Sleep(20*time.Second)
+}
+
+func TestUpdateCompaniesBatch(t *testing.T) {
+
+	// Batch Companies
+	var companies []*models.CompanyModel
+
+	// Modified Time
+	modifiedTime := time.Now().UTC()
+
+	// Company Metadata
+	metadata := map[string]interface{}{
+		"email": "johndoe1@acmeinc.com",
+		"Key1": "metadata",
+		"Key2": 42,
+		"Key3": map[string]interface{}{
+			"Key3_1": "SomeValue",
+		},
+	}
+
+	// Prepare company model
+	companyA := models.CompanyModel{
+		ModifiedTime: 	  &modifiedTime,
+		SessionToken:     nil,
+		IpAddress:		  nil,
+		CompanyId:		  "1",	
+		CompanyDomain:    nil,
+		Metadata:		  &metadata,
+	}
+
+	companyB := models.CompanyModel{
+		ModifiedTime: 	  &modifiedTime,
+		SessionToken:     nil,
+		IpAddress:		  nil,
+		CompanyId:		  "2",	
+		CompanyDomain:    nil,
+		Metadata:		  &metadata,
+	}
+
+	companies = append(companies, &companyA)
+	companies = append(companies, &companyB)
+
+	// Update Companies
+	moesifmiddleware.UpdateCompaniesBatch(companies, moesifOption)
+
+	// Sleep to allow queue to flush for testing purpose
+	time.Sleep(20*time.Second)
 }
