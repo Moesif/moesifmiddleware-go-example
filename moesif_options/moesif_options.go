@@ -17,6 +17,11 @@ func identifyUser(request *http.Request, response moesifmiddleware.MoesifRespons
 	return "golangapiuser"
 }
 
+// Set Company Id
+func identifyCompany(request *http.Request, response moesifmiddleware.MoesifResponseRecorder) string{
+	return "golangapicompany"
+}
+
 // Set Session Token
 func getSessionToken(request *http.Request, response moesifmiddleware.MoesifResponseRecorder) string{
 	return "token is blah blah blah"
@@ -53,7 +58,12 @@ func shouldSkipOutgoing(request *http.Request, response *http.Response) bool{
 
 // Set Outgoing Event User Id
 func identifyUserOutgoing(request *http.Request, response *http.Response) string{
-	return "golangapiuser"
+	return "golangapiuserOutgoing"
+}
+
+// Set Outgoing Event Company Id
+func identifyCompanyOutgoing(request *http.Request, response *http.Response) string{
+	return "golangapicompanyOutgoing"
 }
 
 // Set Outgoing Event Session Token
@@ -92,12 +102,14 @@ func MoesifOptions() map[string]interface{} {
 		"Get_Metadata": getMetadata,
 		"Should_Skip": shouldSkip,
 		"Identify_User": identifyUser,
+		"Identify_Company": identifyCompany,
 		"Get_Session_Token": getSessionToken,
 		"Mask_Event_Model": maskEventModel,
 		"Debug": true,
 		"Capture_Outoing_Requests": true,
 		"Should_Skip_Outgoing": shouldSkipOutgoing,
 		"Identify_User_Outgoing": identifyUserOutgoing,
+		"Identify_Company_Outgoing": identifyCompanyOutgoing,
 		"Get_Metadata_Outgoing": getMetadataOutgoing,
 		"Get_Session_Token_Outgoing": getSessionTokenOutgoing,
 		"Mask_Event_Model_Outgoing": maskEventModelOutgoing,
