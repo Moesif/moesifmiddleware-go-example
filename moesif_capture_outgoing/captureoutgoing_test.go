@@ -30,6 +30,8 @@ func TestCaptureOutgoing(t *testing.T) {
 		log.Printf("Error while sending request : %s.\n", err.Error())
 	}
 
+	log.Printf("Waiting for the queue to flush")
+
 	// Sleep to allow queue to flush for testing purpose
 	time.Sleep(20*time.Second)
 
