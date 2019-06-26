@@ -106,6 +106,8 @@ func MoesifOptions() map[string]interface{} {
 		"Get_Session_Token": getSessionToken,
 		"Mask_Event_Model": maskEventModel,
 		"Debug": true,
+		"Log_Body": true,
+		"Log_Body_Outgoing": true,
 		"Capture_Outoing_Requests": true,
 		"Should_Skip_Outgoing": shouldSkipOutgoing,
 		"Identify_User_Outgoing": identifyUserOutgoing,

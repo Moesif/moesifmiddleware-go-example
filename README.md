@@ -47,7 +47,8 @@ func MoesifOptions() map[string]interface{} {
 func MoesifOptions() map[string]interface{} {
 	var moesifOptions = map[string]interface{} {
         "Application_Id": "Moesif Application Id",
-        "Capture_Outoing_Requests": true,
+		"Capture_Outoing_Requests": true,
+		"Log_Body": true,
 	}
 	return moesifOptions
 }
