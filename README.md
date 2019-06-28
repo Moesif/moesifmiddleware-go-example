@@ -28,6 +28,7 @@ http.Handle(pattern string, moesifmiddleware.MoesifMiddleware(http.HandlerFunc(h
 func MoesifOptions() map[string]interface{} {
 	var moesifOptions = map[string]interface{} {
 		"Application_Id": "Moesif Application Id",
+		"Log_Body": true,
 	}
 	return moesifOptions
 }
