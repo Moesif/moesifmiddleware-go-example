@@ -1,7 +1,6 @@
 # Moesif Go Example
 
-[Moesif](https://www.moesif.com) is an API analyatics and monitoring platform. [moesifdjango](https://github.com/Moesif/moesifdjango).
-
+[Moesif](https://www.moesif.com) is an API analyatics and monitoring platform.
 This is an example API built on Go with Moesif integrated. 
 
 [Source Code on GitHub](https://github.com/moesif/moesifmiddleware-go-example)
