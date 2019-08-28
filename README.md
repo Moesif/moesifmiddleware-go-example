@@ -1,6 +1,8 @@
-# MoesifMiddleware Example for Golang
+# Moesif Go Example
 
-Send REST API Events to Moesif for error analysis
+[Moesif](https://www.moesif.com) is an API analyatics and monitoring platform. [moesifdjango](https://github.com/Moesif/moesifdjango).
+
+This is an example API built on Go with Moesif integrated. 
 
 [Source Code on GitHub](https://github.com/moesif/moesifmiddleware-go-example)
 
@@ -22,7 +24,7 @@ http.Handle(pattern string, moesifmiddleware.MoesifMiddleware(http.HandlerFunc(h
 
 1. Install Moesif Middleware if you have not done so. `go get github.com/moesif/moesifmiddleware-go`
 
-2. Be sure to edit the moesif_options/moesif_options.go to change the application id to your application id obtained from Moesif.
+2. Be sure to edit the moesif_options/moesif_options.go to add your Moesif application id.
 
 ```go
 func MoesifOptions() map[string]interface{} {
@@ -33,8 +35,18 @@ func MoesifOptions() map[string]interface{} {
 	return moesifOptions
 }
 ```
+Your Moesif Application Id can be found in the [_Moesif Portal_](https://www.moesif.com/).
+After signing up for a Moesif account, your Moesif Application Id will be displayed during the onboarding steps. 
 
-3. Start the server - `go run main.go`
+You can always find your Moesif Application Id at any time by logging 
+into the [_Moesif Portal_](https://www.moesif.com/), click on the top right menu,
+and then clicking _Installation_.
+
+3. Start the server:
+
+```bash
+go run main.go
+```
 
 4. See main.go for some urls that you can hit the server with (e.g. http://localhost:3000/api/employee/42), and the data should be captured in the corresponding Moesif account of the application id.
 
