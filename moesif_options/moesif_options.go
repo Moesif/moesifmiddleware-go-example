@@ -108,7 +108,6 @@ func MoesifOptions() map[string]interface{} {
 		"Debug": true,
 		"Log_Body": true,
 		"Log_Body_Outgoing": true,
-		"Capture_Outoing_Requests": true,
 		"Should_Skip_Outgoing": shouldSkipOutgoing,
 		"Identify_User_Outgoing": identifyUserOutgoing,
 		"Identify_Company_Outgoing": identifyCompanyOutgoing,
