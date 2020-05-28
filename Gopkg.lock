@@ -2,23 +2,31 @@
 
 
 [[projects]]
-  digest = "1:9f870f2e8d1ed5690703df16c9608516dba226ecb5c808d58a0db46a6a7b5059"
+  digest = "1:97855e14d0a338ec734e0222571152ac6fdd9bd143ff182dab61fc1558ed688d"
   name = "github.com/moesif/moesifapi-go"
   packages = [
     ".",
     "models",
   ]
   pruneopts = "UT"
-  revision = "5707e881a41db7abb0a0095bba9b3c2ce1faf701"
-  version = "v1.0.3"
+  revision = "61d8434084921441c059b139a157de6446220ac7"
+  version = "v1.0.4"
 
 [[projects]]
-  digest = "1:0987530fe447c610ceee5e808f9593b3dfe3f941a27390451330788df298ea24"
+  digest = "1:4b7e09b519b1a40764972396e7db3c3e6df471dcee6a52ca538aadc57d059854"
   name = "github.com/moesif/moesifmiddleware-go"
   packages = ["."]
   pruneopts = "UT"
-  revision = "f5e3faca16c1407029d0661853457bad4c08d34f"
-  version = "v1.0.5"
+  revision = "a50a13b8c07f51781b4a53d6a338271a68bf43b4"
+  version = "v1.0.6"
+
+[[projects]]
+  branch = "master"
+  digest = "1:dbd9e14b7bd270963d66b6f8050c3f6f63e01f9be39c47e5702b752e2607f7ac"
+  name = "github.com/moesif/moesifmiddleware-go-example"
+  packages = ["moesif_options"]
+  pruneopts = "UT"
+  revision = "760ba295ab91de29c224d553af0ff5fcfb8245ee"
 
 [[projects]]
   branch = "master"
@@ -29,7 +37,7 @@
     "context/ctxhttp",
   ]
   pruneopts = "UT"
-  revision = "16171245cfb220d5317888b716d69c1fb4e7992b"
+  revision = "0ba52f642ac2f9371a88bfdde41f4b4e195a37c0"
 
 [solve-meta]
   analyzer-name = "dep"
@@ -37,6 +45,7 @@
   input-imports = [
     "github.com/moesif/moesifapi-go/models",
     "github.com/moesif/moesifmiddleware-go",
+    "github.com/moesif/moesifmiddleware-go-example/moesif_options",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
