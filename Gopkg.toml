@@ -27,11 +27,15 @@
 
 [[constraint]]
   name = "github.com/moesif/moesifapi-go"
-  version = "1.0.3"
+  version = "1.0.4"
 
 [[constraint]]
   name = "github.com/moesif/moesifmiddleware-go"
-  version = "1.0.5"
+  version = "1.0.6"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/moesif/moesifmiddleware-go-example"
 
 [prune]
   go-tests = true
