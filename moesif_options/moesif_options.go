@@ -7,9 +7,20 @@ import (
 	"github.com/moesif/moesifapi-go/models"
 )
 
-// Mask Event Model
-func maskEventModel(eventModel models.EventModel) models.EventModel {
-	return eventModel
+func maskRequestHeader() []string {
+	return []string{"reqHeader"}
+}
+
+func maskRequestBody() []string {
+	return []string{"reqBody", "password"}
+}
+
+func maskResponseHeader() []string {
+	return []string{"rspHeader"}
+}
+
+func maskResponseBody() []string {
+	return []string{"id", "rspBody"}
 }
 
 // Set User Id
@@ -97,14 +108,17 @@ func getMetadataOutgoing(request *http.Request, response *http.Response) map[str
 
 func MoesifOptions() map[string]interface{} {
 	var moesifOptions = map[string]interface{} {
-		"Application_Id": "Moesif Application Id",
+		"Application_Id": "Your Moesif Application Id",
 		"Api_Version": "1.0.0",
 		"Get_Metadata": getMetadata,
 		"Should_Skip": shouldSkip,
 		"Identify_User": identifyUser,
 		"Identify_Company": identifyCompany,
 		"Get_Session_Token": getSessionToken,
-		"Mask_Event_Model": maskEventModel,
+		"Request_Header_Masks": maskRequestHeader,
+		"Request_Body_Masks": maskRequestBody,
+		"Response_Header_Masks": maskResponseHeader,
+		"Response_Body_Masks": maskResponseBody,
 		"Debug": true,
 		"Log_Body": true,
 		"Log_Body_Outgoing": true,

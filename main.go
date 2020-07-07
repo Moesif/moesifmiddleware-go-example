@@ -1,16 +1,16 @@
 package main
 
-import(
-	"log"
+import (
+	"encoding/json"
+	models "github.com/moesif/moesifapi-go/models"
 	moesifmiddleware "github.com/moesif/moesifmiddleware-go"
 	options "github.com/moesif/moesifmiddleware-go-example/moesif_options"
-	models "github.com/moesif/moesifapi-go/models"
+	"log"
 	"net/http"
-	"time"
-	"encoding/json"
+	"path"
 	"strconv"
 	"strings"
-	"path"
+	"time"
 )
 
 var moesifOption map[string]interface{}
@@ -19,11 +19,11 @@ func init() {
 	moesifOption = options.MoesifOptions()
 }
 
-type Employee struct{
-	DateOfBirth      *time.Time 		`json:"date_of_birth" form:"date_of_birth"`			//Time when request was made
-	Id				 int				`json:"id" form:"id"`                               //HTTP Status code such as 200
-	FirstName		 string				`json:"first_name" form:"first_name"`               //verb of the API request such as GET or POST
-	LastName		 string				`json:"last_name" form:"last_name"`                 //verb of the API request such as GET or POST
+type Employee struct {
+	DateOfBirth *time.Time `json:"date_of_birth" form:"date_of_birth"` //Time when request was made
+	Id          int        `json:"id" form:"id"`                       //HTTP Status code such as 200
+	FirstName   string     `json:"first_name" form:"first_name"`       //verb of the API request such as GET or POST
+	LastName    string     `json:"last_name" form:"last_name"`         //verb of the API request such as GET or POST
 }
 
 func ParseID(s string) (id int, err error) {
@@ -45,7 +45,7 @@ func ParseID(s string) (id int, err error) {
 }
 
 func literalFieldValue(value string) *string {
-    return &value
+	return &value
 }
 
 func main() {
@@ -64,9 +64,9 @@ func handle(w http.ResponseWriter, r *http.Request) {
 	id, _ := ParseID(r.URL.Path)
 	var employee = Employee{
 		DateOfBirth: &time,
-		Id: id,
-		FirstName: "firstName",
-		LastName: "lastName",
+		Id:          id,
+		FirstName:   "firstName",
+		LastName:    "lastName",
 	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(employee)
@@ -77,24 +77,24 @@ func Usershandle(w http.ResponseWriter, r *http.Request) {
 
 	// Campaign object is optional, but useful if you want to track ROI of acquisition channels
 	// See https://www.moesif.com/docs/api#users for campaign schema
-	campaign := models.CampaignModel {
-		UtmSource: literalFieldValue("google"),
-		UtmMedium: literalFieldValue("cpc"), 
+	campaign := models.CampaignModel{
+		UtmSource:   literalFieldValue("google"),
+		UtmMedium:   literalFieldValue("cpc"),
 		UtmCampaign: literalFieldValue("adwords"),
-		UtmTerm: literalFieldValue("api+tooling"),
-		UtmContent: literalFieldValue("landing"),
+		UtmTerm:     literalFieldValue("api+tooling"),
+		UtmContent:  literalFieldValue("landing"),
 	}
-		
+
 	// metadata can be any custom dictionary
 	metadata := map[string]interface{}{
-		"email": "john@acmeinc.com",
+		"email":      "john@acmeinc.com",
 		"first_name": "John",
-		"last_name": "Doe",
-		"title": "Software Engineer",
+		"last_name":  "Doe",
+		"title":      "Software Engineer",
 		"sales_info": map[string]interface{}{
-			"stage": "Customer",
+			"stage":          "Customer",
 			"lifetime_value": 24000,
-			"account_owner": "mary@contoso.com",
+			"account_owner":  "mary@contoso.com",
 		},
 	}
 
@@ -111,40 +111,39 @@ func Usershandle(w http.ResponseWriter, r *http.Request) {
 	moesifmiddleware.UpdateUser(&user, moesifOption)
 }
 
-
 func Companieshandle(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 
 	// Campaign object is optional, but useful if you want to track ROI of acquisition channels
 	// See https://www.moesif.com/docs/api#update-a-company for campaign schema
-	campaign := models.CampaignModel {
-		UtmSource: literalFieldValue("google"),
-		UtmMedium: literalFieldValue("cpc"), 
+	campaign := models.CampaignModel{
+		UtmSource:   literalFieldValue("google"),
+		UtmMedium:   literalFieldValue("cpc"),
 		UtmCampaign: literalFieldValue("adwords"),
-		UtmTerm: literalFieldValue("api+tooling"),
-		UtmContent: literalFieldValue("landing"),
+		UtmTerm:     literalFieldValue("api+tooling"),
+		UtmContent:  literalFieldValue("landing"),
 	}
-		
+
 	// metadata can be any custom dictionary
 	metadata := map[string]interface{}{
-		"org_name": "Acme, Inc",
-		"plan_name": "Free",
+		"org_name":   "Acme, Inc",
+		"plan_name":  "Free",
 		"deal_stage": "Lead",
-		"mrr": 24000,
+		"mrr":        24000,
 		"demographics": map[string]interface{}{
-			"alexa_ranking": 500000,
+			"alexa_ranking":  500000,
 			"employee_count": 47,
 		},
 	}
-	
+
 	companyId := path.Base(r.URL.Path)
 
 	// Prepare company model
 	company := models.CompanyModel{
-		CompanyId:        companyId,  // The only required field is your company id
-		CompanyDomain:    literalFieldValue("acmeinc.com"), // If domain is set, Moesif will enrich your profiles with publicly available info 
-		Campaign:         &campaign,
-		Metadata:         &metadata,
+		CompanyId:     companyId,                        // The only required field is your company id
+		CompanyDomain: literalFieldValue("acmeinc.com"), // If domain is set, Moesif will enrich your profiles with publicly available info
+		Campaign:      &campaign,
+		Metadata:      &metadata,
 	}
 
 	moesifmiddleware.UpdateCompany(&company, moesifOption)
