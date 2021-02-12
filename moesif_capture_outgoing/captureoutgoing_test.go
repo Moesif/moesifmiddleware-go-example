@@ -1,13 +1,13 @@
 package capture_outgoing_test
 
 import (
+	"github.com/moesif/moesifapi-go/models"
+	moesifmiddleware "github.com/moesif/moesifmiddleware-go"
+	options "github.com/moesif/moesifmiddleware-go-example/moesif_options"
 	"log"
 	"net/http"
-	"time"
-	moesifmiddleware "github.com/moesif/moesifmiddleware-go"
-	"github.com/moesif/moesifapi-go/models"
-	options "github.com/moesif/moesifmiddleware-go-example/moesif_options"
 	"testing"
+	"time"
 )
 
 var moesifOption map[string]interface{}
@@ -33,20 +33,20 @@ func TestCaptureOutgoing(t *testing.T) {
 	log.Printf("Waiting for the queue to flush")
 
 	// Sleep to allow queue to flush for testing purpose
-	time.Sleep(20*time.Second)
+	time.Sleep(20 * time.Second)
 
 }
 
 func TestUpdateUser(t *testing.T) {
-	
+
 	// Modified Time
 	modifiedTime := time.Now().UTC()
 
 	// User Metadata
 	metadata := map[string]interface{}{
 		"email": "johndoe1@acmeinc.com",
-		"Key1": "metadata",
-		"Key2": 42,
+		"Key1":  "metadata",
+		"Key2":  42,
 		"Key3": map[string]interface{}{
 			"Key3_1": "SomeValue",
 		},
@@ -54,19 +54,19 @@ func TestUpdateUser(t *testing.T) {
 
 	// Prepare user model
 	user := models.UserModel{
-		ModifiedTime: 	  &modifiedTime,
-		SessionToken:     nil,
-		IpAddress:		  nil,
-		UserId:			  "golangapiuser",	
-		UserAgentString:  nil,
-		Metadata:		  &metadata,
+		ModifiedTime:    &modifiedTime,
+		SessionToken:    nil,
+		IpAddress:       nil,
+		UserId:          "golangapiuser",
+		UserAgentString: nil,
+		Metadata:        &metadata,
 	}
 
 	// Update User
 	moesifmiddleware.UpdateUser(&user, moesifOption)
 
 	// Sleep to allow queue to flush for testing purpose
-	time.Sleep(20*time.Second)
+	time.Sleep(20 * time.Second)
 }
 
 func TestUpdateUsersBatch(t *testing.T) {
@@ -80,8 +80,8 @@ func TestUpdateUsersBatch(t *testing.T) {
 	// User Metadata
 	metadata := map[string]interface{}{
 		"email": "johndoe1@acmeinc.com",
-		"Key1": "metadata",
-		"Key2": 42,
+		"Key1":  "metadata",
+		"Key2":  42,
 		"Key3": map[string]interface{}{
 			"Key3_1": "SomeValue",
 		},
@@ -89,21 +89,21 @@ func TestUpdateUsersBatch(t *testing.T) {
 
 	// Prepare user model
 	userA := models.UserModel{
-		ModifiedTime: 	  &modifiedTime,
-		SessionToken:     nil,
-		IpAddress:		  nil,
-		UserId:			  "golangapiuser",	
-		UserAgentString:  nil,
-		Metadata:		  &metadata,
+		ModifiedTime:    &modifiedTime,
+		SessionToken:    nil,
+		IpAddress:       nil,
+		UserId:          "golangapiuser",
+		UserAgentString: nil,
+		Metadata:        &metadata,
 	}
 
 	userB := models.UserModel{
-		ModifiedTime: 	  &modifiedTime,
-		SessionToken:     nil,
-		IpAddress:		  nil,
-		UserId:			  "golangapiuser1",	
-		UserAgentString:  nil,
-		Metadata:		  &metadata,
+		ModifiedTime:    &modifiedTime,
+		SessionToken:    nil,
+		IpAddress:       nil,
+		UserId:          "golangapiuser1",
+		UserAgentString: nil,
+		Metadata:        &metadata,
 	}
 
 	users = append(users, &userA)
@@ -113,19 +113,19 @@ func TestUpdateUsersBatch(t *testing.T) {
 	moesifmiddleware.UpdateUsersBatch(users, moesifOption)
 
 	// Sleep to allow queue to flush for testing purpose
-	time.Sleep(20*time.Second)
+	time.Sleep(20 * time.Second)
 }
 
 func TestUpdateCompany(t *testing.T) {
-	
+
 	// Modified Time
 	modifiedTime := time.Now().UTC()
 
 	// User Metadata
 	metadata := map[string]interface{}{
 		"email": "johndoe1@acmeinc.com",
-		"Key1": "metadata",
-		"Key2": 42,
+		"Key1":  "metadata",
+		"Key2":  42,
 		"Key3": map[string]interface{}{
 			"Key3_1": "SomeValue",
 		},
@@ -133,19 +133,19 @@ func TestUpdateCompany(t *testing.T) {
 
 	// Prepare company model
 	company := models.CompanyModel{
-		ModifiedTime: 	  &modifiedTime,
-		SessionToken:     nil,
-		IpAddress:		  nil,
-		CompanyId:		  "1",	
-		CompanyDomain:    nil,
-		Metadata:		  &metadata,
+		ModifiedTime:  &modifiedTime,
+		SessionToken:  nil,
+		IpAddress:     nil,
+		CompanyId:     "1",
+		CompanyDomain: nil,
+		Metadata:      &metadata,
 	}
 
 	// Update company
 	moesifmiddleware.UpdateCompany(&company, moesifOption)
 
 	// Sleep to allow queue to flush for testing purpose
-	time.Sleep(20*time.Second)
+	time.Sleep(20 * time.Second)
 }
 
 func TestUpdateCompaniesBatch(t *testing.T) {
@@ -159,8 +159,8 @@ func TestUpdateCompaniesBatch(t *testing.T) {
 	// Company Metadata
 	metadata := map[string]interface{}{
 		"email": "johndoe1@acmeinc.com",
-		"Key1": "metadata",
-		"Key2": 42,
+		"Key1":  "metadata",
+		"Key2":  42,
 		"Key3": map[string]interface{}{
 			"Key3_1": "SomeValue",
 		},
@@ -168,21 +168,21 @@ func TestUpdateCompaniesBatch(t *testing.T) {
 
 	// Prepare company model
 	companyA := models.CompanyModel{
-		ModifiedTime: 	  &modifiedTime,
-		SessionToken:     nil,
-		IpAddress:		  nil,
-		CompanyId:		  "1",	
-		CompanyDomain:    nil,
-		Metadata:		  &metadata,
+		ModifiedTime:  &modifiedTime,
+		SessionToken:  nil,
+		IpAddress:     nil,
+		CompanyId:     "1",
+		CompanyDomain: nil,
+		Metadata:      &metadata,
 	}
 
 	companyB := models.CompanyModel{
-		ModifiedTime: 	  &modifiedTime,
-		SessionToken:     nil,
-		IpAddress:		  nil,
-		CompanyId:		  "2",	
-		CompanyDomain:    nil,
-		Metadata:		  &metadata,
+		ModifiedTime:  &modifiedTime,
+		SessionToken:  nil,
+		IpAddress:     nil,
+		CompanyId:     "2",
+		CompanyDomain: nil,
+		Metadata:      &metadata,
 	}
 
 	companies = append(companies, &companyA)
@@ -192,5 +192,5 @@ func TestUpdateCompaniesBatch(t *testing.T) {
 	moesifmiddleware.UpdateCompaniesBatch(companies, moesifOption)
 
 	// Sleep to allow queue to flush for testing purpose
-	time.Sleep(20*time.Second)
+	time.Sleep(20 * time.Second)
 }
