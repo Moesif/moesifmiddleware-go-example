@@ -5,6 +5,7 @@ import (
 	models "github.com/moesif/moesifapi-go/models"
 	moesifmiddleware "github.com/moesif/moesifmiddleware-go"
 	options "github.com/moesif/moesifmiddleware-go-example/moesif_options"
+	"io"
 	"log"
 	"net/http"
 	"path"
@@ -62,6 +63,8 @@ func handle(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	time := time.Now().UTC().AddDate(-30, 0, 0)
 	id, _ := ParseID(r.URL.Path)
+	body, _ := io.ReadAll(r.Body)
+	log.Printf("Body: %s\n", body)
 	var employee = Employee{
 		DateOfBirth: &time,
 		Id:          id,
