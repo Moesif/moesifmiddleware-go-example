@@ -1,10 +1,11 @@
 package moesif_options
 
 import (
-	"github.com/moesif/moesifapi-go/models"
-	moesifmiddleware "github.com/moesif/moesifmiddleware-go"
 	"net/http"
 	"strings"
+
+	"github.com/moesif/moesifapi-go/models"
+	moesifmiddleware "github.com/moesif/moesifmiddleware-go"
 )
 
 func maskRequestHeader() []string {
@@ -25,12 +26,12 @@ func maskResponseBody() []string {
 
 // Set User Id
 func identifyUser(request *http.Request, response moesifmiddleware.MoesifResponseRecorder) string {
-	return "golangapiuser"
+	return request.Header.Get("X-User-Id")
 }
 
 // Set Company Id
 func identifyCompany(request *http.Request, response moesifmiddleware.MoesifResponseRecorder) string {
-	return "golangapicompany"
+	return request.Header.Get("X-Company-Id")
 }
 
 // Set Session Token

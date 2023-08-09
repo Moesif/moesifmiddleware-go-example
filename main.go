@@ -2,9 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	models "github.com/moesif/moesifapi-go/models"
-	moesifmiddleware "github.com/moesif/moesifmiddleware-go"
-	options "github.com/moesif/moesifmiddleware-go-example/moesif_options"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -12,6 +9,10 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	models "github.com/moesif/moesifapi-go/models"
+	moesifmiddleware "github.com/moesif/moesifmiddleware-go"
+	options "github.com/moesif/moesifmiddleware-go-example/moesif_options"
 )
 
 var moesifOption map[string]interface{}
@@ -52,7 +53,7 @@ func literalFieldValue(value string) *string {
 func main() {
 	http.Handle("/api/employee/", moesifmiddleware.MoesifMiddleware(http.HandlerFunc(handle), moesifOption))
 	http.Handle("/api/users/", moesifmiddleware.MoesifMiddleware(http.HandlerFunc(Usershandle), moesifOption))
-	http.Handle("/api/companies/", moesifmiddleware.MoesifMiddleware(http.HandlerFunc(Companieshandle), moesifOption))
+	log.Println("Listening on port 3000")
 	err := http.ListenAndServe(":3000", nil)
 	if err != nil {
 		log.Fatalf("Could not start server: %s\n", err.Error())
