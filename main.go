@@ -2,9 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	models "github.com/moesif/moesifapi-go/models"
-	moesifmiddleware "github.com/moesif/moesifmiddleware-go"
-	options "github.com/moesif/moesifmiddleware-go-example/moesif_options"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -12,6 +9,10 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	models "github.com/moesif/moesifapi-go/models"
+	moesifmiddleware "github.com/moesif/moesifmiddleware-go"
+	options "github.com/moesif/moesifmiddleware-go-example/moesif_options"
 )
 
 var moesifOption map[string]interface{}
